@@ -7,4 +7,9 @@ BackupDestination="/TestingSpace/backupDestination"
 #逆増分バックアップによって消去されたファイルの保存場所
 tmp="/TestingSpace/tmp"
 
-rsync -av --delete  --backup --backup-dir='/TestingSpace/tmp/deletedata-'$(date +%Y'/'%m'/'%d-%H:%M:%S) ./backupSource/ ./backupDestination/
+dpkg -s rsync>/dev/null 2>&1
+if [ ! $? -eq 0 ]; then
+apt install -y rsync
+fi
+
+rsync -av --delete  --backup --backup-dir='/TestingSpace/autBackupSprict/tmp/deletedata-'$(date +%Y'/'%m'/'%d-%H:%M:%S) ./backupSource/ ./backupDestination/
